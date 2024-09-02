@@ -31,7 +31,7 @@
 
 //Constantes de configuração do sistema de tracker
 int Metodo = 0; // 0: O sensor com menor distância faz o tracker girar.
-int Toleracia = 700;
+int Toleracia = 10; // Tolerancia em cm
 int ToleranciaDeErro = 5; // Apos um dar certo, o tracker só vai se mover depois deste tempo acabar.
 const float Dist_Entre_Sensores = 50;
 const float Angulo_Sensores = 30;
@@ -84,22 +84,22 @@ void setup() {
 
 void loop() {
   MoverComBaseNoSensor();
-
+  delay(40);
 }
 
 void MoverComBaseNoSensor(){
-  float d1 = sonar1.ping_median(3);
-  float d2 = sonar2.ping_median(3);
+  float d1 = sonar1.ping_cm();
+  float d2 = sonar2.ping_cm();
   if(d1 != 0 && d2 != 0){
     if(d1 > d2 + Toleracia){
       if(angulo < 180){
-        angulo += 2;
+        angulo += 1;
       }
     
     }
     if(d2 > d1 + Toleracia){
       if(angulo > 0){
-        angulo -= 2;
+        angulo -= 1;
       }
     
     }
