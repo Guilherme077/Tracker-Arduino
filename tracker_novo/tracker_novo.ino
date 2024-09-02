@@ -90,17 +90,22 @@ void loop() {
 void MoverComBaseNoSensor(){
   float d1 = sonar1.ping_median(3);
   float d2 = sonar2.ping_median(3);
-  if(d1 > d2 + Toleracia){
-    if(angulo < 180){
-      angulo += 2;
-    }
+  if(d1 != 0 && d2 != 0){
+    if(d1 > d2 + Toleracia){
+      if(angulo < 180){
+        angulo += 2;
+      }
     
-  }
-  if(d2 > d1 + Toleracia){
-    if(angulo > 0){
-      angulo -= 2;
     }
+    if(d2 > d1 + Toleracia){
+      if(angulo > 0){
+        angulo -= 2;
+      }
     
+    }
+  
+  }else{
+    Serial.println("Nada foi feito!");
   }
   Serial.println("Distâncias: ");
   Serial.println(d1);
@@ -108,7 +113,6 @@ void MoverComBaseNoSensor(){
   Serial.println(angulo);
   servo.write(angulo);
 }
-
 float DistanciaDoAlvo(float a, float b, float c){
   //a: medida da distância entre os sensores dividido por 2
   //b: Medida da distância de um sensor ao objeto
